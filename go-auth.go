@@ -56,16 +56,17 @@ type Cache struct {
 }
 
 var allowedBackends = map[string]bool{
-	"postgres": true,
-	"jwt":      true,
-	"redis":    true,
-	"http":     true,
-	"files":    true,
-	"mysql":    true,
-	"sqlite":   true,
-	"mongo":    true,
-	"plugin":   true,
-	"grpc":     true,
+	"postgres":   true,
+	"jwt":        true,
+	"redis":      true,
+	"redisToken": true,
+	"http":       true,
+	"files":      true,
+	"mysql":      true,
+	"sqlite":     true,
+	"mongo":      true,
+	"plugin":     true,
+	"grpc":       true,
 }
 
 var backends []string          //List of selected backends.
@@ -290,6 +291,14 @@ func AuthPluginInit(keys []string, values []string, authOptsNum int) {
 				} else {
 					log.Infof("Backend registered: %s", beIface.GetName())
 					cmBackends["redis"] = beIface.(bes.Redis)
+				}
+			case "redisToken":
+				beIface, err = bes.NewRedisToken(authOpts, commonData.LogLevel)
+				if err != nil {
+					log.Fatalf("Backend register error: couldn't initialize %s backend with error %s.", bename, err)
+				} else {
+					log.Infof("Backend registered: %s", beIface.GetName())
+					cmBackends["redisToken"] = beIface.(bes.Redis)
 				}
 			case "mysql":
 				beIface, err = bes.NewMysql(authOpts, commonData.LogLevel)

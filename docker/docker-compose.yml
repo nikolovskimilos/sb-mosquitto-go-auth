@@ -6,9 +6,11 @@ services:
     image: redis:5-alpine
     volumes:
       - redisdata:/data
+    ports:
+      - 6379:6379
 
   mosquitto:
-    image: iegomez/mosquitto-go-auth:0.5.0
+    image: iegomez/sb-mosquitto-go-auth:0.5.0
     volumes:
       - ./conf:/etc/mosquitto
     ports:
