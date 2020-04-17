@@ -298,7 +298,7 @@ func AuthPluginInit(keys []string, values []string, authOptsNum int) {
 					log.Fatalf("Backend register error: couldn't initialize %s backend with error %s.", bename, err)
 				} else {
 					log.Infof("Backend registered: %s", beIface.GetName())
-					cmBackends["redisToken"] = beIface.(bes.Redis)
+					cmBackends["redisToken"] = beIface.(bes.RedisToken)
 				}
 			case "mysql":
 				beIface, err = bes.NewMysql(authOpts, commonData.LogLevel)
